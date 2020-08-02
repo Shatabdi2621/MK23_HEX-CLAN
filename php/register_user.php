@@ -3,7 +3,7 @@ require 'PHPMailerAutoload.php';
  
 		$mysql_hostname = '';
 		$mysql_username = '';
-		$mysql_password = 'password';
+		$mysql_password = '';
 		$mysql_dbname = 'junior_official';
 		
 		$dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_dbname", $mysql_username, $mysql_password);

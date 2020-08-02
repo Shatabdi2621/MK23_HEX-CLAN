@@ -18,7 +18,7 @@
  
  $password = $obj['password'];
  
- $loginQuery = "select * from pansion where userid = '$userid' and password = '$password'";
+ $loginQuery = "select * from Pansion where userid = '$userid' and password = '$password'";
  
  $check = mysqli_fetch_array(mysqli_query($con,$loginQuery));
  
