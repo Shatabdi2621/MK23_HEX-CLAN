@@ -5,13 +5,13 @@ include("include/config.php");
 // Code for updating Password
 if(isset($_POST['change']))
 {
-$name=$_SESSION['name'];
+$cno=$_SESSION['cnumber'];
 $email=$_SESSION['email'];
 $newpassword=md5($_POST['password']);
-$query=mysqli_query($con,"update users set password='$newpassword' where fullName='$name' and email='$email'");
+$query=mysqli_query($con,"update doctors set password='$newpassword' where contactno='$cno' and docEmail='$email'");
 if ($query) {
 echo "<script>alert('Password successfully updated.');</script>";
-echo "<script>window.location.href ='user-login.php'</script>";
+echo "<script>window.location.href ='index.php'</script>";
 }
 
 }
@@ -53,14 +53,14 @@ return true;
 		<div class="row">
 			<div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 				<div class="logo margin-top-30">
-				<a href="../index.html"><h2> FIU| Junior official Reset Password</h2></a>
+				<a href="../index.html"><h2> FIU | Junior official Reset Password</h2></a>
 				</div>
 
 				<div class="box-login">
 					<form class="form-login" name="passwordreset" method="post" onSubmit="return valid();">
 						<fieldset>
 							<legend>
-								Junior official reset password
+								Junior official Reset Password
 							</legend>
 							<p>
 								Please set your new password.<br />
@@ -89,7 +89,7 @@ return true;
 							</div>
 							<div class="new-account">
 								Already have an account? 
-								<a href="user-login.php">
+								<a href="index.php">
 									Log-in
 								</a>
 							</div>
