@@ -1,12 +1,12 @@
 <?php
  
-$HostName = "database-1.caf6lw71z7rh.ap-south-1.rds.amazonaws.com";
+$HostName = "";
  
 $DatabaseName = "junior_official";
  
-$HostUser = "admin";
+$HostUser = "";
  
-$HostPass = "ag_db110"; 
+$HostPass = ""; 
  
 $con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
  
