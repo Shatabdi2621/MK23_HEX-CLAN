@@ -3,25 +3,17 @@ session_start();
 error_reporting(0);
 include('include/config.php');
 include('include/checklogin.php');
-if(isset($_POST['submit']))
-{
-	$docspecialization=$_POST['Designation'];
-$docname=$_POST['SeniorOfficialname'];
-$docaddress=$_POST['SeniorOfficialaddress'];
-$doccontactno=$_POST['SeniorOfficialcontact'];
-$docemail=$_POST['SeniorOfficialemail'];
-$sql=mysqli_query($con,"Update doctors set Designation='$docspecialization',SeniorOfficialname='$docname',SeniorOfficialaddress='$docaddress',SeniorOfficialcontact='$doccontactno' where id='".$_SESSION['id']."'");
-if($sql)
-{
-echo "<script>alert('Doctor Details updated Successfully');</script>";
-
-}
-}
+check_login();
+if(isset($_GET['cancel']))
+		  {
+mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['id']."'");
+                  $_SESSION['msg']="Appointment canceled !!";
+		  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Senior official | Edit Senior official Details</title>
+		<title>Senior Official | Circular Updates</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -37,28 +29,29 @@ echo "<script>alert('Doctor Details updated Successfully');</script>";
 		<link rel="stylesheet" href="assets/css/styles.css">
 		<link rel="stylesheet" href="assets/css/plugins.css">
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-
-
 	</head>
 	<body>
 		<div id="app">		
 <?php include('include/sidebar.php');?>
 			<div class="app-content">
-				<?php include('include/header.php');?>
+				
+
+					<?php include('include/header.php');?>
+				<!-- end: TOP NAVBAR -->
 				<div class="main-content" >
 					<div class="wrap-content container" id="container">
 						<!-- start: PAGE TITLE -->
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Senior official | Edit Senior official Details</h1>
+									<h1 class="mainTitle">Senior official | Cicular Updates</h1>
 																	</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>Senior official</span>
+										<span>Senior official </span>
 									</li>
 									<li class="active">
-										<span>Edit Senior official Details</span>
+									<span>Circular Updates</span>
 									</li>
 								</ol>
 							</div>
@@ -66,101 +59,87 @@ echo "<script>alert('Doctor Details updated Successfully');</script>";
 						<!-- end: PAGE TITLE -->
 						<!-- start: BASIC EXAMPLE -->
 						<div class="container-fluid container-fullw bg-white">
-							<div class="row">
+						
+
+									<div class="row">
 								<div class="col-md-12">
 									
-									<div class="row margin-top-30">
-										<div class="col-lg-8 col-md-12">
-											<div class="panel panel-white">
-												<div class="panel-heading">
-													<h5 class="panel-title">Edit Senior official</h5>
-												</div>
-												<div class="panel-body">
-									<?php $sql=mysqli_query($con,"select * from doctors where docEmail='".$_SESSION['dlogin']."'");
-while($data=mysqli_fetch_array($sql))
+									<p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?>
+								<?php echo htmlentities($_SESSION['msg']="");?></p>	
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+												<th class="center">#</th>
+												<th class="hidden-xs">Junior Official  Name</th>
+												<th>Designation</th>
+												<th>Meeting Date / Time </th>
+												<th>Meeting Creation Date  </th>
+												<th>Current Status</th>
+												<th>Action</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+<?php
+$sql=mysqli_query($con,"select users.fullName as fname,appointment.*  from appointment join users on users.id=appointment.userId where appointment.doctorId='".$_SESSION['id']."'");
+$cnt=1;
+while($row=mysqli_fetch_array($sql))
 {
 ?>
-<h4><?php echo htmlentities($data['doctorName']);?>'s Profile</h4>
-<p><b>Profile Reg. Date: </b><?php echo htmlentities($data['creationDate']);?></p>
-<?php if($data['updationDate']){?>
-<p><b>Profile Last Updation Date: </b><?php echo htmlentities($data['updationDate']);?></p>
-<?php } ?>
-<hr />
-													<form role="form" name="adddoc" method="post" onSubmit="return valid();">
-														<div class="form-group">
-															<label for="DoctorSpecialization">
-																Senior official Dewsignation
-															</label>
-							<select name="Doctorspecialization" class="form-control" required="required">
-					<option value="<?php echo htmlentities($data['specilization']);?>">
-					<?php echo htmlentities($data['specilization']);?></option>
-<?php $ret=mysqli_query($con,"select * from doctorspecilization");
-while($row=mysqli_fetch_array($ret))
+
+											<tr>
+												<td class="center"><?php echo $cnt;?>.</td>
+												<td class="hidden-xs"><?php echo $row['name'];?></td>
+												<td><?php echo $row['Designation'];?></td>
+												<td><?php echo $row['MeetingDate'];?> / <?php echo
+												 $row['MeetingTime'];?>
+												</td>
+												<td><?php echo $row['postingDate'];?></td>
+												<td>
+<?php if(($row['userStatus']==1) && ($row['doctorStatus']==1))  
 {
-?>
-																<option value="<?php echo htmlentities($row['specilization']);?>">
-																	<?php echo htmlentities($row['specilization']);?>
-																</option>
-																<?php } ?>
-																
-															</select>
-														</div>
+	echo "Active";
+}
+if(($row['userStatus']==0) && ($row['doctorStatus']==1))  
+{
+	echo "Cancel by Patient";
+}
 
-<div class="form-group">
-															<label for="doctorname">
-																 Senior official Name
-															</label>
-	<input type="text" name="docname" class="form-control" value="<?php echo htmlentities($data['doctorName']);?>" >
-														</div>
-
-
-<div class="form-group">
-															<label for="address">
-																 Senior official Address
-															</label>
-					<textarea name="clinicaddress" class="form-control"><?php echo htmlentities($data['address']);?></textarea>
-														</div>
-	
-<div class="form-group">
-									<label for="fess">
-																 Senior Official Contact no
-															</label>
-					<input type="text" name="doccontact" class="form-control" required="required"  value="<?php echo htmlentities($data['contactno']);?>">
-														</div>
-
-<div class="form-group">
-									<label for="fess">
-																 Senior official Email
-															</label>
-					<input type="email" name="docemail" class="form-control"  readonly="readonly"  value="<?php echo htmlentities($data['docEmail']);?>">
-														</div>
+if(($row['userStatus']==1) && ($row['doctorStatus']==0))  
+{
+	echo "Cancel by you";
+}
 
 
 
-														
-														<?php } ?>
-														
-														
-														<button type="submit" name="submit" class="btn btn-o btn-primary">
-															Update
-														</button>
-													</form>
+												?></td>
+												<td >
+												<div class="visible-md visible-lg hidden-sm hidden-xs">
+							<?php if(($row['userStatus']==1) && ($row['doctorStatus']==1))  
+{ ?>
+
+													
+	<a href="appointment-history.php?id=<?php echo $row['id']?>&cancel=update" onClick="return confirm('Are you sure you want to cancel this appointment ?')"class="btn btn-transparent btn-xs tooltips" title="Cancel Appointment" tooltip-placement="top" tooltip="Remove">Cancel</a>
+	<?php } else {
+
+		echo "Canceled";
+		} ?>
 												</div>
-											</div>
-										</div>
+												</td>
+											</tr>
 											
-											</div>
-										</div>
-									
+											<?php 
+$cnt=$cnt+1;
+											 }?>
+											
+											
+										</tbody>
+									</table>
 								</div>
-							
+							</div>
+								</div>
+						
 						<!-- end: BASIC EXAMPLE -->
-			
-					
-					
-						
-						
-					
 						<!-- end: SELECT BOXES -->
 						
 					</div>
@@ -172,7 +151,7 @@ while($row=mysqli_fetch_array($ret))
 		
 			<!-- start: SETTINGS -->
 	<?php include('include/setting.php');?>
-			<>
+			
 			<!-- end: SETTINGS -->
 		</div>
 		<!-- start: MAIN JAVASCRIPTS -->
