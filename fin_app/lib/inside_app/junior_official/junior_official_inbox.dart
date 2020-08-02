@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'package:fin_app/inside_app/junior_official/ask_senior_official.dart';
 import 'package:fin_app/inside_app/junior_official/junior_official_login.dart';
 import 'package:fin_app/inside_app/junior_official/junior_official_query.dart';
+import 'package:fin_app/inside_app/junior_official/junior_official_query_manual.dart';
+import 'package:fin_app/inside_app/junior_official/queries_senior_official.dart';
 import 'package:fin_app/inside_app/senior_official/ask_expert.dart';
+import 'package:fin_app/inside_app/senior_official/queries_junior_official.dart';
 import 'package:fin_app/inside_app/senior_official/senior_official_inbox_pfrda.dart';
 import 'package:fin_app/inside_app/senior_official/senior_official_inbox_rbi.dart';
 import 'package:flutter/material.dart';
@@ -10,15 +14,15 @@ import 'package:http/http.dart' as http;
 
 class Info {
   final String id;
-  final String heading, body, short, timestamp;
+  final String heading, body, short, timestamp, useridSeniorOfficial;
 
-  Info({
-    this.id,
-    this.heading,
-    this.body,
-    this.short,
-    this.timestamp,
-  });
+  Info(
+      {this.id,
+      this.heading,
+      this.body,
+      this.short,
+      this.timestamp,
+      this.useridSeniorOfficial});
 
   factory Info.fromJson(Map<String, dynamic> jsonData) {
     return Info(
@@ -27,6 +31,7 @@ class Info {
       short: jsonData['short'],
       body: jsonData['body'],
       timestamp: jsonData['timestamp'],
+      useridSeniorOfficial: jsonData['userid'],
     );
   }
 }
@@ -42,21 +47,17 @@ class Inbox extends StatefulWidget {
 }
 
 class _InboxState extends State<Inbox> {
-
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
   Future<Null> refreshList() async {
     refreshKey.currentState?.show(atTop: false);
     await Future.delayed(Duration(seconds: 2));
 
-    setState(() {
-      
-    });
+    setState(() {});
 
     return null;
   }
 
- 
   Widget build(context) {
     return ListView.builder(
       itemCount: widget.information.length,
@@ -70,40 +71,47 @@ class _InboxState extends State<Inbox> {
     return new ListTile(
         title: new Container(
           margin: EdgeInsets.only(top: 10),
-          child: new Column(
+          child: new Column(children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      child: Text(inform.heading, style: TextStyle(fontSize: 18),),
-                      
-                      padding: EdgeInsets.only(bottom: 8.0),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 8.0),
-                      child: Text(inform.short, style: TextStyle(fontSize: 14),),
-                    ),
-                    Row(children: <Widget>[
-                      Padding(
-                          child: Text(
-                            inform.timestamp,
-                             style: TextStyle(fontSize: 14),
-                            textAlign: TextAlign.right,
-                          ),
-                          padding: EdgeInsets.all(1.0)),
-                    ]),
-                  ],
+                Padding(
+                  child: Text(
+                    inform.heading,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  padding: EdgeInsets.only(bottom: 8.0),
                 ),
-                Divider(color: Colors.black)
-              ]),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    inform.short,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                Row(children: <Widget>[
+                  Padding(
+                      child: Text(
+                        inform.timestamp,
+                        style: TextStyle(fontSize: 14),
+                        textAlign: TextAlign.right,
+                      ),
+                      padding: EdgeInsets.all(1.0)),
+                ]),
+              ],
+            ),
+            Divider(color: Colors.black)
+          ]),
         ),
         onTap: () {
           var route = new MaterialPageRoute(
-            builder: (BuildContext context) => new SecondScreen(value: inform,
+            builder: (BuildContext context) => new SecondScreen(
+              value: inform,
               userid: widget.userid,
+              useridSeniorOfficial: inform.useridSeniorOfficial,
               sector: widget.sector,
-              choice: widget.choice,),
+              choice: widget.choice,
+            ),
           );
           Navigator.of(context).push(route);
         });
@@ -112,9 +120,15 @@ class _InboxState extends State<Inbox> {
 
 class SecondScreen extends StatefulWidget {
   final Info value;
-  final String userid, choice, sector;
+  final String userid, useridSeniorOfficial, choice, sector;
 
-  SecondScreen({Key key, this.value, this.userid, this.choice, this.sector})
+  SecondScreen(
+      {Key key,
+      this.value,
+      this.userid,
+      this.useridSeniorOfficial,
+      this.choice,
+      this.sector})
       : super(key: key);
 
   @override
@@ -122,14 +136,7 @@ class SecondScreen extends StatefulWidget {
 }
 
 class _SecondScreenState extends State<SecondScreen> {
-
-  
-  
-
-  
-
   Future queryCircular() async {
-    
     var url = 'https://puppyish-ribbon.000webhostapp.com/query.php';
 
     var data = {
@@ -146,7 +153,6 @@ class _SecondScreenState extends State<SecondScreen> {
     var message = jsonDecode(response.body);
 
     if (message == 'Query Sent') {
-
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -166,9 +172,44 @@ class _SecondScreenState extends State<SecondScreen> {
     }
   }
 
+  Future querySeniorCircular() async {
+    var url = 'https://puppyish-ribbon.000webhostapp.com/query_senior.php';
+
+    var data = {
+      'useridSeniorOfficial': widget.useridSeniorOfficial,
+      'userid': widget.userid,
+      'body': widget.value.body,
+      'short': widget.value.short,
+      'heading': widget.value.heading,
+      'post': widget.sector,
+      'sector': widget.choice
+    };
+    print(data);
+    var response = await http.post(url, body: json.encode(data));
+
+    var message = jsonDecode(response.body);
+
+    if (message == 'Query Sent') {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text(message),
+            actions: <Widget>[
+              FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   Future saveCircular() async {
-    
     var url = 'https://puppyish-ribbon.000webhostapp.com/save_junior.php';
 
     var data = {
@@ -220,16 +261,20 @@ class _SecondScreenState extends State<SecondScreen> {
           child: new Center(
             child: Column(
               children: <Widget>[
-                
                 Padding(
-                  child: Text(widget.value.heading, style: TextStyle(fontSize: 18),),
+                  child: Text(
+                    widget.value.heading,
+                    style: TextStyle(fontSize: 18),
+                  ),
                   padding: EdgeInsets.all(20.0),
                 ),
-                
                 Padding(
                   child: new Text(
                     'SUBJECT : ${widget.value.short}',
-                    style: new TextStyle(fontWeight: FontWeight.bold,fontSize: 15,),
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
                     textAlign: TextAlign.left,
                   ),
                   padding: EdgeInsets.all(20.0),
@@ -247,27 +292,30 @@ class _SecondScreenState extends State<SecondScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2.0,2,2,15),
+                      padding: const EdgeInsets.fromLTRB(2.0, 2, 2, 15),
                       child: RaisedButton(
                         color: Colors.cyan[100],
-                        child: Text('Save', 
-                        style: TextStyle(
+                        child: Text(
+                          'Save',
+                          style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'Open Sans',
-                              fontWeight: FontWeight.bold),),
+                              fontWeight: FontWeight.bold),
+                        ),
                         onPressed: saveCircular,
                       ),
                     ),
-                    
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2.0,2,2,15),
+                      padding: const EdgeInsets.fromLTRB(2.0, 2, 2, 15),
                       child: RaisedButton(
                         color: Colors.cyan[100],
-                        child: Text("Queries",
-                        style: TextStyle(
+                        child: Text(
+                          "Chatbot",
+                          style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'Open Sans',
-                              fontWeight: FontWeight.bold),),
+                              fontWeight: FontWeight.bold),
+                        ),
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => Query()));
@@ -275,26 +323,58 @@ class _SecondScreenState extends State<SecondScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2.0,2,2,15),
+                      padding: const EdgeInsets.fromLTRB(2.0, 2, 2, 15),
                       child: RaisedButton(
-                        color: Colors.cyan[100],
-                        child: Text("Ask Expert",
-                        style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'Open Sans',
-                              fontWeight: FontWeight.bold),),
-                        onPressed: () {Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AskExpert(
-                            userid: widget.userid,
-                            heading: widget.value.heading,
-                            body: widget.value.body,
-                            short: widget.value.short,
-                            choice: widget.choice,
-                            sector: widget.sector,
-                            ),)
-                        );}
-                      ),
+                          color: Colors.cyan[100],
+                          child: Text(
+                            "Ask Expert",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Open Sans',
+                                fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AskExpert(
+                                    userid: widget.userid,
+                                    heading: widget.value.heading,
+                                    body: widget.value.body,
+                                    short: widget.value.short,
+                                    choice: widget.choice,
+                                    sector: widget.sector,
+                                  ),
+                                ));
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(2.0, 2, 2, 15),
+                      child: RaisedButton(
+                          color: Colors.cyan[100],
+                          child: Text(
+                            'Queries',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Open Sans',
+                                fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AskSeniorOfficial(
+                                    useridSeniorOfficial:
+                                        widget.useridSeniorOfficial,
+                                    userid: widget.userid,
+                                    heading: widget.value.heading,
+                                    body: widget.value.body,
+                                    short: widget.value.short,
+                                    choice: widget.choice,
+                                    sector: widget.sector,
+                                  ),
+                                ));
+                          }),
                     )
                   ],
                 ),
@@ -308,7 +388,6 @@ class _SecondScreenState extends State<SecondScreen> {
 }
 
 class New extends StatefulWidget {
-
   final String userid, choice, sector;
   New({this.userid, this.choice, this.sector});
 
@@ -317,35 +396,38 @@ class New extends StatefulWidget {
 }
 
 class _NewState extends State<New> {
-
   Future<List<Info>> downloadJSON() async {
-  final jsonEndpoint = "https://puppyish-ribbon.000webhostapp.com/junior_official_inbox.php";
-  
-  
-  var data = {'choice':widget.choice};
-  var response = await http.post(jsonEndpoint, body: json.encode(data));
+    final jsonEndpoint =
+        "https://puppyish-ribbon.000webhostapp.com/junior_official_inbox.php";
 
-  if (response.statusCode == 200) {
-    List information = json.decode(response.body);
-    return information.map((inform) => new Info.fromJson(inform)).toList();
-  } else
-    throw Exception('We were not able to successfully download the json data.');
-}
-  
+    var data = {'choice': widget.choice};
+    var response = await http.post(jsonEndpoint, body: json.encode(data));
+
+    if (response.statusCode == 200) {
+      List information = json.decode(response.body);
+      return information.map((inform) => new Info.fromJson(inform)).toList();
+    } else
+      throw Exception(
+          'We were not able to successfully download the json data.');
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'Circulars',
-            style: TextStyle(color: Colors.black, fontFamily: 'Open Sans', fontWeight: FontWeight.bold),
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Circulars',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Open Sans',
+                  fontWeight: FontWeight.bold),
+            ),
+            backgroundColor: Colors.cyan[100],
           ),
-          backgroundColor: Colors.cyan[100],
-        ),
-        drawer: Drawer(
+          drawer: Drawer(
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[
@@ -383,7 +465,7 @@ class _NewState extends State<New> {
                 ),
                 ListTile(
                   title: Text(
-                    'PFRDA',
+                    'Suggestions',
                     style: TextStyle(
                         fontSize: 20.0,
                         fontFamily: 'Open Sans',
@@ -393,23 +475,27 @@ class _NewState extends State<New> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => NewPFRDA(
-                                  userid: widget.userid,
-                                  sector: widget.sector,
-                                  choice: widget.choice,
-                                )));
+                          builder: (context) => QuerySeniorOfficial(
+                            userid: widget.userid,
+                            choice: widget.choice,
+                            sector: widget.sector,
+                          ),
+                        ));
                   },
                 ),
               ],
             ),
           ),
-        body: new Center(
+          body: new Center(
             child: new FutureBuilder<List<Info>>(
               future: downloadJSON(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List<Info> information = snapshot.data;
-                  return new Inbox(information: information, userid: widget.userid,);
+                  return new Inbox(
+                    information: information,
+                    userid: widget.userid,
+                  );
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
@@ -431,8 +517,7 @@ class _NewState extends State<New> {
               Icons.refresh,
               color: Colors.black,
             ),
-          )
-      ),
+          )),
     );
   }
 }

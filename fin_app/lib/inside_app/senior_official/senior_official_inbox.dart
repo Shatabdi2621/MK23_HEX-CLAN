@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:fin_app/inside_app/junior_official/queries_senior_official.dart';
 import 'package:fin_app/inside_app/senior_official/ask_expert.dart';
+import 'package:fin_app/inside_app/senior_official/queries_junior_official.dart';
 import 'package:fin_app/inside_app/senior_official/senior_official_inbox_pfrda.dart';
 import 'package:fin_app/inside_app/senior_official/senior_official_inbox_rbi.dart';
 import 'package:fin_app/inside_app/senior_official/senior_official_login.dart';
@@ -149,7 +151,7 @@ class SecondScreen extends StatefulWidget {
 
 class _SecondScreenState extends State<SecondScreen> {
   Future sendmailCircular() async {
-    var url = 'http://(phone ip address)/app/register_user.php';
+    var url = 'http://Phone IP Address/app/register_user.php';
 
     var data = {
       'body': widget.value.body,
@@ -493,7 +495,7 @@ class _NewState extends State<New> {
                 ),
                 ListTile(
                   title: Text(
-                    'PFRDA',
+                    'Queries from senior official',
                     style: TextStyle(
                         fontSize: 20.0,
                         fontFamily: 'Open Sans',
@@ -501,13 +503,13 @@ class _NewState extends State<New> {
                   ),
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NewPFRDA(
-                                  userid: widget.userid,
-                                  sector: widget.sector,
-                                  choice: widget.choice,
-                                )));
+                          context,
+                          MaterialPageRoute(builder: (context) => QueryJuniorOfficial(
+                            userid: widget.userid,
+                            choice: widget.choice,
+                            sector: widget.sector,
+                            ),)
+                        );
                   },
                 ),
               ],

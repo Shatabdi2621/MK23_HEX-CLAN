@@ -1,4 +1,7 @@
+import 'package:fin_app/inside_app/junior_official/junior_official_contact_us.dart';
+import 'package:fin_app/inside_app/junior_official/junior_official_profile.dart';
 import 'package:fin_app/inside_app/junior_official/junior_official_save.dart';
+import 'package:fin_app/inside_app/junior_official/junior_official_query_manual.dart';
 import 'package:flutter/material.dart';
 import 'package:fin_app/inside_app/junior_official/junior_official_inbox.dart';
 
@@ -27,6 +30,17 @@ class _JuniorOfficialLoginState extends State<JuniorOfficialLogin> {
         choice: widget.choice,
         sector: widget.sector,
       ),
+      QueryManual(
+        userid: widget.userid,
+        choice: widget.choice,
+        sector: widget.choice,
+      ),
+      Profile(
+        userid: widget.userid,
+        choice: widget.choice,
+        sector: widget.choice,
+      ),
+      ContactUs()
     ];
     super.initState();
   }
