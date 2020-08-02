@@ -1,42 +1,68 @@
 {
-  "name": "blockchain-demo",
-  "description": "A web-based demonstration of blockchain concepts.",
-  "author": {
-    "name": "Anders Brownworth"
-  },
-  "version": "0.0.1",
-  "keywords": [
-    "blockchain",
-    "demo",
-    "bitcoin"
+  "_args": [
+    [
+      "acorn-globals@3.1.0",
+      "C:\\Users\\DELL\\blockchain-demo"
+    ]
   ],
-  "scripts": {
-    "start": "node ./bin/www"
+  "_from": "acorn-globals@3.1.0",
+  "_id": "acorn-globals@3.1.0",
+  "_inBundle": false,
+  "_integrity": "sha1-/YJw9x+7SZawBPqIDuXUZXOnMb8=",
+  "_location": "/acorn-globals",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "acorn-globals@3.1.0",
+    "name": "acorn-globals",
+    "escapedName": "acorn-globals",
+    "rawSpec": "3.1.0",
+    "saveSpec": null,
+    "fetchSpec": "3.1.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/anders94/blockchain-demo.git"
+  "_requiredBy": [
+    "/with"
+  ],
+  "_resolved": "https://registry.npmjs.org/acorn-globals/-/acorn-globals-3.1.0.tgz",
+  "_spec": "3.1.0",
+  "_where": "C:\\Users\\DELL\\blockchain-demo",
+  "author": {
+    "name": "ForbesLindesay"
   },
   "bugs": {
-    "url": "https://github.com/anders94/blockchain-demo/issues"
+    "url": "https://github.com/ForbesLindesay/acorn-globals/issues"
   },
-  "license": "MIT",
   "dependencies": {
-    "async": "^1.4.2",
-    "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.4",
-    "debug": ">=2.6.9",
-    "express": "^4.17.1",
-    "i18n": "0.8.3",
-    "pug": "^2.0.4",
-    "morgan": ">=1.9.1",
-    "serve-favicon": "^2.5.0"
+    "acorn": "^4.0.4"
   },
-  "homepage": "https://github.com/anders94/blockchain-demo#readme",
-  "maintainers": [
-    {
-      "name": "anders",
-      "email": "anders-git@evantide.com"
-    }
-  ]
+  "description": "Detect global variables in JavaScript using acorn",
+  "devDependencies": {
+    "testit": "^2.0.2"
+  },
+  "files": [
+    "index.js",
+    "LICENSE"
+  ],
+  "homepage": "https://github.com/ForbesLindesay/acorn-globals#readme",
+  "keywords": [
+    "ast",
+    "variable",
+    "name",
+    "lexical",
+    "scope",
+    "local",
+    "global",
+    "implicit"
+  ],
+  "license": "MIT",
+  "name": "acorn-globals",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ForbesLindesay/acorn-globals.git"
+  },
+  "scripts": {
+    "test": "node test"
+  },
+  "version": "3.1.0"
 }
