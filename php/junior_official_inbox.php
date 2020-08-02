@@ -3,10 +3,10 @@ class Info
 {
     public function connect()
     {
-        $DB_SERVER = "database-1.caf6lw71z7rh.ap-south-1.rds.amazonaws.com";
+        $DB_SERVER = "";
         $DB_NAME = "junior_official";
-        $USERNAME = "admin";
-        $PASSWORD = "ag_db110";
+        $USERNAME = "";
+        $PASSWORD = "";
         $con=new mysqli($DB_SERVER,$USERNAME,$PASSWORD,$DB_NAME);
         if($con->connect_error)
         {
