@@ -109,10 +109,10 @@ Navigator.pushReplacement(context, route);
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Welcome to FIU',
+                    'Login',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 40.0,
+                      fontSize: 32.0,
                       fontFamily: 'Open Sans',
                     ),
                   ),
@@ -164,7 +164,7 @@ Navigator.pushReplacement(context, route);
                     height: 50.0,
                     width: 150.0,
                     child: RaisedButton(
-                      color: Colors.cyan[100],
+                      color: Colors.cyan[300],
                       onPressed: userLogin,
                       child: Container(
                         alignment: Alignment.center,
@@ -181,14 +181,14 @@ Navigator.pushReplacement(context, route);
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 20.0),
+                    padding: EdgeInsets.only(top: 80.0),
                     child: FlatButton(
                       onPressed: () {},
                       child: Text(
                         'Forgot your password?',
                         style: TextStyle(
-                            fontFamily: 'Open Sans',
-                            fontWeight: FontWeight.bold),
+                            fontSize: 20.0,
+                            fontFamily: 'Open Sans',),
                       ),
                     ),
                   ),

@@ -125,7 +125,7 @@ class SecondScreen extends StatefulWidget {
 
 class _SecondScreenState extends State<SecondScreen> {
   Future sendmailCircular() async {
-    var url = 'http://Phone IP Address/app/register_user.php';
+    var url = 'http://Phone Ip Address/app/register_user.php';
 
     var data = {
       'body': widget.value.body,

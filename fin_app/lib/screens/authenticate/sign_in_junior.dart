@@ -1,3 +1,4 @@
+import 'package:fin_app/screens/authenticate/upload_junior_official.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -45,13 +46,10 @@ class _LoginJuniorUserState extends State<LoginJuniorUser> {
       setState(() {
         visible = false;
       });
-
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  JuniorOfficialLogin()));
-    } else {
+      Route route = MaterialPageRoute(
+                            builder: (context) => UploadJuniorOfficial(userid: useridController.text, choice: widget.choice, sector: widget.sector));
+                        Navigator.pushReplacement(context, route);
+      } else {
       setState(() {
         visible = false;
       });
@@ -108,10 +106,10 @@ class _LoginJuniorUserState extends State<LoginJuniorUser> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Welcome to FIU',
+                    'Login',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 40.0,
+                      fontSize: 32.0,
                       fontFamily: 'Open Sans',
                     ),
                   ),
@@ -163,7 +161,7 @@ class _LoginJuniorUserState extends State<LoginJuniorUser> {
                     height: 50.0,
                     width: 150.0,
                     child: RaisedButton(
-                      color: Colors.cyan[100],
+                      color: Colors.cyan[300],
                       onPressed: userLogin,
                       child: Container(
                         alignment: Alignment.center,
@@ -180,14 +178,14 @@ class _LoginJuniorUserState extends State<LoginJuniorUser> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 20.0),
+                    padding: EdgeInsets.only(top: 80.0),
                     child: FlatButton(
                       onPressed: () {},
                       child: Text(
                         'Forgot your password?',
                         style: TextStyle(
-                            fontFamily: 'Open Sans',
-                            fontWeight: FontWeight.bold),
+                            fontSize: 20.0,
+                            fontFamily: 'Open Sans',),
                       ),
                     ),
                   ),

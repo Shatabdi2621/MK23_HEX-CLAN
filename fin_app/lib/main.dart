@@ -1,4 +1,5 @@
 import 'package:fin_app/screens/home/home.dart';
+import 'package:fin_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
   routes: {
-    '/': (context) => Home(),
+    '/': (context) => MainScreen(),
   },
     );
   }

@@ -1,3 +1,4 @@
+import 'package:fin_app/inside_app/junior_official/junior_official_login.dart';
 import 'package:fin_app/inside_app/senior_official/senior_official_login.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -5,17 +6,17 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
  
-class UploadImageDemo extends StatefulWidget {
+class UploadJuniorOfficial extends StatefulWidget {
   final String userid, sector, choice;
-  UploadImageDemo({Key key, @required this.userid, this.sector, this.choice}) : super(key: key);
+  UploadJuniorOfficial({Key key, @required this.userid, this.sector, this.choice}) : super(key: key);
  
   final String title = "Upload Image Demo";
  
   @override
-  UploadImageDemoState createState() => UploadImageDemoState();
+  UploadJuniorOfficialState createState() => UploadJuniorOfficialState();
 }
  
-class UploadImageDemoState extends State<UploadImageDemo> {
+class UploadJuniorOfficialState extends State<UploadJuniorOfficial> {
   //
   static final String uploadEndPoint =
       'https://puppyish-ribbon.000webhostapp.com/test.php';
@@ -60,7 +61,7 @@ class UploadImageDemoState extends State<UploadImageDemo> {
       setState(() {
       visible = false; 
       });
-      Route route = MaterialPageRoute(builder: (context) => SeniorOfficialLogin(userid: widget.userid, choice: widget.choice, sector: widget.sector));
+      Route route = MaterialPageRoute(builder: (context) => JuniorOfficialLogin(userid: widget.userid, choice: widget.choice, sector: widget.sector));
 Navigator.pushReplacement(context, route);
   }else{
  

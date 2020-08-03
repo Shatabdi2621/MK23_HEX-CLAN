@@ -5,12 +5,12 @@ import 'package:fin_app/inside_app/senior_official/sector_choice.dart';
 import 'package:fin_app/inside_app/senior_official/register_senior_official.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _HomeState extends State<Home> {
+class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Login',
+                    'Register',
                     style: TextStyle(
                       fontFamily: 'Open Sans',
                       fontSize: 35.0,
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
                       color: Colors.cyan[100],
                       onPressed: () {
                         Route route = MaterialPageRoute(
-                            builder: (context) => ChoiceSenior());
+                            builder: (context) => RegisterSeniorOfficial());
                         Navigator.pushReplacement(context, route);
                       },
                       textColor: Colors.white,
@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
                         alignment: Alignment.center,
                         height: 50,
                         width: 180,
-                        child: Text(
+                        child: const Text(
                           "Senior Official",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
                       color: Colors.cyan[100],
                       onPressed: () {
                         Route route = MaterialPageRoute(
-                            builder: (context) => ChoiceJunior());
+                            builder: (context) => RegisterJuniorOfficial());
                         Navigator.pushReplacement(context, route);
                       },
                       textColor: Colors.white,

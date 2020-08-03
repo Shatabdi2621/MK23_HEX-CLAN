@@ -41,9 +41,9 @@ class _ChoiceSeniorState extends State<ChoiceSenior> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Select your sector',
+                    'Select Your Sector',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 40, fontFamily: 'Open Sans'),
+                    style: TextStyle(fontSize: 35.0, fontFamily: 'Open Sans'),
                   ),
                   Container(
                     padding: EdgeInsets.only(left: 20, right: 20, top: 100),
@@ -52,10 +52,10 @@ class _ChoiceSeniorState extends State<ChoiceSenior> {
                       padding: EdgeInsets.all(0.0),
                       child: Container(
                           alignment: Alignment.center,
-                          height: 60.0,
-                          width: 250.0,
+                          height: 50.0,
+                          width: 200.0,
                           child: Text(
-                            'Banking',
+                            'Banking Sector',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 22,
@@ -79,10 +79,10 @@ class _ChoiceSeniorState extends State<ChoiceSenior> {
                       padding: EdgeInsets.all(0.0),
                       child: Container(
                           alignment: Alignment.center,
-                          height: 60.0,
-                          width: 250.0,
+                          height: 50.0,
+                          width: 200.0,
                           child: Text(
-                            'Insurance',
+                            'Insurance Sector',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 22,
@@ -93,13 +93,10 @@ class _ChoiceSeniorState extends State<ChoiceSenior> {
                       onPressed: () {
                         choice = 'Insurance';
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    LoginSeniorUser(
+                        Route route = MaterialPageRoute(builder: (context) => LoginSeniorUser(
                                       choice: choice,
-                                    )));
+                                    ));
+Navigator.pushReplacement(context, route);
                       },
                     ),
                   ),
@@ -110,10 +107,10 @@ class _ChoiceSeniorState extends State<ChoiceSenior> {
                       padding: EdgeInsets.all(0.0),
                       child: Container(
                           alignment: Alignment.center,
-                          height: 60.0,
-                          width: 250.0,
+                          height: 50.0,
+                          width: 200.0,
                           child: Text(
-                            'Pension',
+                            'Pension Sector',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 22,
@@ -123,13 +120,10 @@ class _ChoiceSeniorState extends State<ChoiceSenior> {
                           )),
                       onPressed: () {
                         choice = 'Pansion';
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    LoginSeniorUser(
+                        Route route = MaterialPageRoute(builder: (context) => LoginSeniorUser(
                                       choice: choice,
-                                    )));
+                                    ));
+Navigator.pushReplacement(context, route);
                       },
                     ),
                   ),

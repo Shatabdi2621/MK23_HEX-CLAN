@@ -5,85 +5,117 @@ import 'package:http/http.dart' as http;
 void main() => runApp(RegisterJuniorOfficial());
 
 class RegisterJuniorOfficial extends StatelessWidget {
-@override
-Widget build(BuildContext context) {
-return MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: Scaffold(
-      appBar: AppBar(title: Text('User Registration Form', style: TextStyle(color: Colors.black, fontFamily: 'Open Sans', fontSize: 20.0, fontWeight: FontWeight.bold),), backgroundColor: Colors.cyan[100],),
-      body: Center(
-        child: RegisterUser()
-        )
-      )
-    );
-}
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(body: Center(child: RegisterUser())));
+  }
 }
 
 class RegisterUser extends StatefulWidget {
-
-RegisterUserState createState() => RegisterUserState();
-
+  RegisterUserState createState() => RegisterUserState();
 }
 
 class RegisterUserState extends State {
-  bool visible = false ;
+  bool visible = false;
   final nameController = TextEditingController();
   final useridController = TextEditingController();
   final addressController = TextEditingController();
   final numberController = TextEditingController();
   final passwordController = TextEditingController();
 
-Future userRegistration() async{
-  setState(() {
-  visible = true ; 
-  });
-  String name = nameController.text;
-  String userid = useridController.text;
-  String password = passwordController.text;
-  String address = passwordController.text;
-  String number = passwordController.text;
-  var url = 'https://puppyish-ribbon.000webhostapp.com/register_junior_official.php';
+  Future userRegistration() async {
+    setState(() {
+      visible = true;
+    });
+    String name = nameController.text;
+    String userid = useridController.text;
+    String password = passwordController.text;
+    String address = passwordController.text;
+    String number = passwordController.text;
+    var url =
+        'https://puppyish-ribbon.000webhostapp.com/register_junior_official.php';
 
-  var data = {'name': name, 'userid': userid, 'password' : password, 'address' : address, 'number' : number};
+    var data = {
+      'name': name,
+      'userid': userid,
+      'password': password,
+      'address': address,
+      'number': number
+    };
 
-  var response = await http.post(url, body: json.encode(data));
+    var response = await http.post(url, body: json.encode(data));
 
-  var message = jsonDecode(response.body);
+    var message = jsonDecode(response.body);
 
-  if(response.statusCode == 200){
-  setState(() {
-    visible = false; 
-  });
-}
+    if (response.statusCode == 200) {
+      setState(() {
+        visible = false;
+      });
+    }
 
-  showDialog(
-  context: context,
-  builder: (BuildContext context) {
-    return AlertDialog(
-      title: new Text(message),
-      actions: <Widget>[
-        FlatButton(
-          child: new Text("OK"),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
-  },
-  );
+  }
 
-}
-
-@override
-Widget build(BuildContext context) {
-return Scaffold(
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
         body: SingleChildScrollView(
             child: Center(
       child: Column(
         children: <Widget>[
           Container(
-              padding: EdgeInsets.only(top: 80),
+              margin: EdgeInsets.only(top: 50),
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      height: 100,
+                      width: 100,
+                      child: Image(
+                          image: AssetImage('assets/images/DFS_Logo1.png'))),
+                  Container(
+                      margin: EdgeInsets.only(right: 20.0),
+                      decoration: BoxDecoration(color: Colors.white),
+                      height: 85,
+                      width: 85,
+                      child: Image(
+                          image: AssetImage('assets/images/App_Logo.png')))
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 50.0),
+              child: Text(
+                      'Register',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        fontFamily: 'Open Sans',
+                      ),
+                    ),
+            ),
+          Container(
+              padding: EdgeInsets.only(top: 20.0),
               width: 330,
               child: Theme(
                 data: ThemeData(
@@ -103,7 +135,7 @@ return Scaffold(
                 ),
               )),
           Container(
-              padding: EdgeInsets.only(top: 40),
+              padding: EdgeInsets.only(top: 20.0),
               width: 330,
               child: Theme(
                 data: ThemeData(
@@ -123,7 +155,7 @@ return Scaffold(
                 ),
               )),
           Container(
-              padding: EdgeInsets.only(top: 40),
+              padding: EdgeInsets.only(top: 20.0),
               width: 330,
               child: Theme(
                 data: ThemeData(
@@ -143,7 +175,7 @@ return Scaffold(
                 ),
               )),
           Container(
-              padding: EdgeInsets.only(top: 40),
+              padding: EdgeInsets.only(top: 20.0),
               width: 330,
               child: Theme(
                 data: ThemeData(
@@ -163,7 +195,7 @@ return Scaffold(
                 ),
               )),
           Container(
-              padding: EdgeInsets.only(top: 40),
+              padding: EdgeInsets.only(top: 20.0),
               width: 330,
               child: Theme(
                 data: ThemeData(
@@ -186,15 +218,19 @@ return Scaffold(
             padding: const EdgeInsets.only(top: 40.0),
             child: Container(
               height: 50.0,
-              width: 250.0,
+              width: 150.0,
               child: RaisedButton(
                 onPressed: userRegistration,
-                color: Colors.cyan[100],
+                color: Colors.cyan[300],
                 textColor: Colors.white,
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: Text(
                   'Register',
-                  style: TextStyle(color: Colors.black, fontFamily: 'Open Sans', fontSize: 20.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Open Sans',
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -207,5 +243,5 @@ return Scaffold(
         ],
       ),
     )));
-}
+  }
 }

@@ -91,6 +91,7 @@ class _InboxState extends State<Inbox> {
                       padding: EdgeInsets.only(bottom: 8.0),
                     ),
                     RaisedButton(
+                      color: Colors.cyan[100],
                       onPressed: () {
                         if (inform.url == null) {
                           
@@ -99,7 +100,7 @@ class _InboxState extends State<Inbox> {
                           print(inform.url);
                         }
                       },
-                      child: Text('Launch URL'),
+                      child: Text('Download PDF'),
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 8.0),
@@ -151,7 +152,7 @@ class SecondScreen extends StatefulWidget {
 
 class _SecondScreenState extends State<SecondScreen> {
   Future sendmailCircular() async {
-    var url = 'http://Phone IP Address/app/register_user.php';
+    var url = 'http://Phone Ip Address/app/register_user.php';
 
     var data = {
       'body': widget.value.body,
