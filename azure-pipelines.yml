@@ -1,7 +1,4 @@
 # Docker
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
 # Build a Docker image
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
@@ -39,3 +36,6 @@ stages:
         cliProjectKey: 'shatabdisingh_demo-project'
         cliProjectName: 'demo-project'
         cliSources: '.'
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
