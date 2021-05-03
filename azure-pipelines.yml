@@ -9,6 +9,15 @@ resources:
 - repo: self
 
 variables:
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'Sonar Cloud Integration'
+    organization: 'shatabdisingh'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'shatabdisingh_demo-project'
+    cliProjectName: 'demo-project'
+    cliSources: '.'
   tag: '$(Build.BuildId)'
 
 stages:
