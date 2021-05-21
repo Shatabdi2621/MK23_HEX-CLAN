@@ -1,0 +1,14 @@
+name: Dev Rating
+on:
+  pull_request:
+    branches: [ master ]  # Put your dev branch
+    types: [ closed ]
+jobs:
+  devrating:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - uses: victorx64/devrating-gh-action@v0
